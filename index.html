@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيل الدخول باستخدام Google - Firebase</title>
+
+  <!-- Firebase (نسخة توافقية مع طريقة السكربت العادية) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
+  <h1>تسجيل الدخول بحساب Google</h1>
+  <button id="loginBtn" style="padding: 10px 20px; font-size: 18px;">تسجيل الدخول</button>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDRkB1Vg31TO8khWByINp0Y696331LGCLk",
+      authDomain: "page-0508.firebaseapp.com",
+      projectId: "page-0508",
+      storageBucket: "page-0508.appspot.com",
+      messagingSenderId: "388974161068",
+      appId: "1:388974161068:web:xxxxxxxxxxxxx"
+    };
+
+    // التهيئة باستخدام نسخة التوافق
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const loginBtn = document.getElementById('loginBtn');
+
+    loginBtn.addEventListener('click', async () => {
+      loginBtn.disabled = true;
+      try {
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        alert(`تم تسجيل الدخول بنجاح، مرحبًا ${user.displayName}`);
+        console.log(user);
+      } catch (error) {
+        alert(`حدث خطأ: ${error.message}`);
+        console.error(error);
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
